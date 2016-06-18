@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Cache-control" content="no-cache"/>
+    <meta charset="utf-8"/>
+    <title>Backbone Routing</title>
+    <link type="text/css" rel="stylesheet" href="/hr/backbone-routing-start/css/style.css"/><!--Change URL to your root-->
+</head>
+<body>
+<div id="container">
+    <div id="locations-links"><b><a href="#" data-id="0">Locations</a></b> - 
+        <a href="#" data-id="1">Tim City</a>
+        <a href="#" data-id="2">Forest</a>
+        <a href="#" data-id="3">Blue River</a>
+        <a href="#" data-id="4">Mountains</a>
+        <a href="#" data-id="5">Mountain Caverns</a>
+        <a href="#" data-id="6">Ocean Beach</a>
+        <a href="#" data-id="7">Tim City Prison</a>
+        <a href="#" data-id="8">Borneau</a>
+        <a href="#" data-id="9">Ocean Cliffs</a>
+        <a href="#" data-id="10">Wyvern Peak</a>
+        <a href="#" data-id="11">Graveyard</a>
+    </div><br>
+	<div id="users-links"><b><a href="#" data-id="0">Users</a></b> - 
+        <a href="#" data-id="1">Timfa</a>
+        <a href="#" data-id="2">Marco</a>
+        <a href="#" data-id="3">Andreas</a>
+        <a href="#" data-id="4">Danique</a>
+        <a href="#" data-id="5">Lucia</a>
+    </div><br>
+	<div id="heroes-links"><b><a href="#" data-id="0">Heroes</a></b> - 
+        <a href="#" data-id="1">Tim</a>
+        <a href="#" data-id="2">Marconan</a>
+        <a href="#" data-id="3">Shadowsnipe</a>
+        <a href="#" data-id="4">Silce</a>
+        <a href="#" data-id="5">Kabouter Lucia</a>
+        <a href="#" data-id="6">Doom Guy</a>
+    </div><br><br>
+	<div id="displayBox"></div>
+    <div id="locations-matches">
+        
+        <!-- create error template -->
+        <script id="template-error" type="text/template">
+
+        </script>
+        <!-- create matches template -->
+		<script id="template-locations" type="text/template">
+			<ul><% _.each( rc.models, function( listItem ){%><li>
+				<h1><%= listItem.attributes.name %></h1><br>
+				<b><i><%=listItem.attributes.description%></i></b><br><br>
+				
+				<% if(listItem.attributes.heroes.length > 0) {%>
+					<b>Heroes:</b><ul><% _.each( listItem.attributes.heroes, function( item ){%><li>
+						<b><%=item.name%></b><br>
+						<i><%=item.currentAction%></i>
+					</li><br><%});%></ul>
+				<%}%>
+				
+				<b>Possible actions:</b><ul><% _.each( listItem.attributes.possibleActions, function( item ){%>
+					<% if(!item.includes("Moving")) {%>
+						<li><i><%=item%></i></li>
+					<%}%>
+				<%});%></ul><br>
+			
+				<% if(listItem.attributes.creatures.length > 0) {%>
+					<b>Creatures:</b><ul><% _.each( listItem.attributes.creatures, function( item ){%><li>
+						<b><%=item.name%></b><br>
+						<i>Danger: <%=item.danger%></i>
+					</li><br><%});%></ul>
+				<%}%>
+				<% if(_.has(listItem.attributes.destinations, "north") || _.has(listItem.attributes.destinations, "east") || _.has(listItem.attributes.destinations, "south") || _.has(listItem.attributes.destinations, "west")) {%>
+					<b>Destinations: </b> <ul>
+						<% if(_.has(listItem.attributes.destinations, "north")) {%>
+						<li>
+							<b>North: </b><txt id="locations-links"><a href="#" data-id="<%=listItem.attributes.destinations.north.id%>"><%=listItem.attributes.destinations.north.name%></a></txt>
+						</li>
+						<%}%>
+						<% if(_.has(listItem.attributes.destinations, "east")) {%>
+						<li>
+							<b>East: </b><txt id="locations-links"><a href="#" data-id="<%=listItem.attributes.destinations.east.id%>"><%=listItem.attributes.destinations.east.name%></a></txt>
+						</li>
+						<%}%>
+						<% if(_.has(listItem.attributes.destinations, "south")) {%>
+						<li>
+							<b>South: </b><txt id="locations-links"><a href="#" data-id="<%=listItem.attributes.destinations.south.id%>"><%=listItem.attributes.destinations.south.name%></a></txt>
+						</li>
+						<%}%>
+						<% if(_.has(listItem.attributes.destinations, "west")) {%>
+						<li>
+							<b>West: </b><txt id="locations-links"><a href="#" data-id="<%=listItem.attributes.destinations.west.id%>"><%=listItem.attributes.destinations.west.name%></a></txt>
+						</li>
+						<%}%>
+					</ul><br>
+				<%}%>
+				<% if(_.has(listItem.attributes, "shop")) {%>
+					<b>Shop:</b><ul><% _.each( listItem.attributes.shop, function( item ){%><li>
+						<b><%=item.name%></b><br>
+						<%=item.category%>, <%=item.type%><br>
+						<i><%=item.description%></i><br>
+						<% if(item.category == "Weapon"){%>
+							Damage: <%=item.damage%><br>
+						<%}%>
+						Price: <%=item.value%><br>
+						Weight: <%=item.weight%><br>
+					</li><br><%});%></ul>
+				<%}%>
+			</li><% }); %></ul>
+		</script>
+		
+		<script id="template-users" type="text/template">
+			<ul><% _.each( rc.models, function( listItem ){%><li>
+				<h1><%= listItem.attributes.name %></h1><br>
+				<i>Level <%= listItem.attributes.level %></i><br>
+				Hero slots: <%= listItem.attributes.emptyHeroSlots %><br>
+				
+				<% if(listItem.attributes.heroes.length > 0) {%>
+					<b>Heroes:</b><ul><% _.each( listItem.attributes.heroes, function( item ){%><li>
+						<b><txt id="locations-links"><a href="#" data-id="<%=item.id%>"><%=item.name%></a></txt></b> (<%=item.health%>HP)<br>
+						<i><%=item.currentAction%>, <%=item.location%></i>
+					</li><br><%});%></ul>
+				<%}%>
+				
+				<% if(listItem.attributes.graveyard.length > 0) {%>
+					<b>Dead Heroes:</b><ul><% _.each( listItem.attributes.graveyard, function( item ){%><li>
+						<b><txt id="locations-links"><a href="#" data-id="<%=item.id%>"><%=item.name%></a></txt></b><br>
+						<i>Died while <%=item.currentAction%>, <%=item.location%></i>
+					</li><br><%});%></ul>
+				<%}%>
+			</li><br><% }); %></ul>
+		</script>
+		
+        <script id="template-heroes" type="text/template">
+			<ul>
+				<% _.each( rc.models, function( listItem ){%>
+
+					<li>
+
+						<h1><%= listItem.attributes.name %></h1><br>
+						<b>Health:</b> <%= listItem.attributes.currentHealth %>/<%= listItem.attributes.maxHealth %><br>
+						
+						<b>Stats:</b> <ul><% _.each(listItem.attributes.stats, function(value, key) {%>
+							<li>
+								<b><%=key%>:</b> <%=value%>
+							</li>
+						<%});%></ul><br>
+						
+						<b>Current Location:</b> <txt id="locations-links"><a href="#" data-id="<%=listItem.attributes.locationId.id%>"><%=listItem.attributes.locationId.name%></a></txt><br>
+						<b>Money:</b> <%=listItem.attributes.money%><br><br>
+						
+						<b>Inventory:</b> (Total Value: <%=listItem.attributes.inventoryValue%>, Weight: <%= listItem.attributes.weightCarried %>) <ul><% _.each( listItem.attributes.inventory, function( item ){%>
+							<li>	
+								<b><%= item.name %></b><br>
+								<%= item.description %><br>
+								Category: <%= item.category %>, <%= item.type %><br>
+								<% if(item.category == "Weapon") {%>
+								Damage: <%=item.damage %><br>
+								<%}%>
+								Value: <%=item.value %><br>
+								Weight: <%=item.weight %><br>
+							</li><br>
+							<% }); %></ul><br>
+						
+						<b>Log:</b> <ul><% _.each( listItem.attributes.log, function( log ){%>
+							<li>	
+								<b><%= log.location %>, <%= log.date %>:</b><br>
+								<i><%= log.message %></i>
+							</li><br>
+							<% }); %></ul>
+					</li>
+
+				<% }); %>
+			</ul>
+        </script>
+    </div>
+</div>
+<script src="/hr/backbone-routing-start/dist/bundle.js" type="text/javascript"></script><!--Change URL to your root-->
+</body>
+</html>
