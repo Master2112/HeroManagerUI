@@ -37,6 +37,7 @@
         <a href="#" data-id="6">Doom Guy</a>
         <a href="#" data-id="7">McFaggots</a>
     </div><br><br>
+	<div id="controlBox"></div>
 	<div id="displayBox"></div>
     <div id="locations-matches">
         
@@ -45,6 +46,24 @@
 
         </script>
         <!-- create matches template -->
+		
+		<script id="template-controller" type="text/template">
+			<% if(rc == null) {%>
+				<input type="text" id="loginEmail"></input>
+				<input type="password" id="loginPassword"></input>
+				<a href="#"><input type="button" id="LoginButton" value="Log In"></input></a>
+			<%} else {%>
+				<h3> My Heroes: </h3>
+				<% _.each(rc.heroes, function(hero){%>
+					<b><%=hero.name%></b> <i><%=hero.currentAction%>, <%=hero.location%></i>
+					<%_.each(hero.possibleActions, function(action){ if(action != "Buying" && action != "Selling")%>
+						<a href="#" data-id="<%=hero.id%>"><input type="button" data-id="<%=hero.id%>" value="<%=action%>" class="actionButton" id="<%=action%>"></input></a>
+					<%})%>
+					<br>
+				<%});%>
+			<%}%>
+		</script>
+		
 		<script id="template-locations" type="text/template">
 			<ul><% _.each( rc.models, function( listItem ){%><li>
 				<h1><%= listItem.attributes.name %></h1><br>

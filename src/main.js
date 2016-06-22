@@ -10,6 +10,8 @@ import HeroesView from './views/HeroesView';
 import UsersView from './views/UsersView';
 import LocationsView from './views/LocationsView';
 
+import HeroControlView from './views/HeroControlView';
+
 (function ()
 {
     let setGlobalVariables = function ()
@@ -43,6 +45,7 @@ import LocationsView from './views/LocationsView';
         new HeroesView({el: "#heroes", collection: heroesCollection});
         new LocationsView({el: "#locations", collection: locationsCollection});
         new UsersView({el: "#users", collection: usersCollection});
+        new HeroControlView({el: "#controlBox", collection: usersCollection});
 	}
 
     window.addEventListener('load', init);
