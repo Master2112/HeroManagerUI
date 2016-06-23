@@ -20,9 +20,9 @@ const HeroControlView = View.extend
 	
 	clickHandler: function(e)
 	{
-		console.log("Form interaction on " + e.toElement.id);
-		console.log(e.toElement);
-		if(e.toElement.id == "LoginButton")
+		console.log("Form interaction on " + e.target.id);
+		console.log(e.target);
+		if(e.target.id == "LoginButton")
 		{
 			let name = $(this.el).find('#loginEmail').val();
 			let password = $(this.el).find('#loginPassword').val();
@@ -37,10 +37,10 @@ const HeroControlView = View.extend
 				console.log("Success! key = " + key);
 			}, this);
 		}
-		else if(e.toElement.class = "actionButton")
+		else if(e.target.class = "actionButton")
 		{
 			console.log("Commanded " + this.userKey);
-			HeroController.CommandHero(e.currentTarget.dataset['id'], e.toElement.id, this.userKey, function(data, self)
+			HeroController.CommandHero(e.target.dataset['id'], e.target.id, this.userKey, function(data, self)
 			{
 				self.loadMatches();
 				console.log(data);
