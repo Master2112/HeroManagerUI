@@ -31,6 +31,8 @@ const StoreView = View.extend
 		{
 			HeroController.BuyShopItem(e.target.dataset['heroid'], e.target.dataset['itemid'], this.HeroData.key, function(key, self)
 			{
+				console.log("Transaction Result:");
+				console.log(key);
 				App.events.trigger('reloadStore', self.HeroData);
 			}, this);
 		}
@@ -39,6 +41,8 @@ const StoreView = View.extend
 		{
 			HeroController.SellHeroItem(e.target.dataset['heroid'], e.target.dataset['itemid'], this.HeroData.key, function(key, self)
 			{
+				console.log("Transaction Result:");
+				console.log(key);
 				App.events.trigger('reloadStore', self.HeroData);
 			}, this);
 		}
