@@ -34,7 +34,7 @@ const HeroController = {
 		);
 	},
 
-	SellHeroItem: function(heroId, itemId, key, isDone)
+	SellHeroItem: function(heroId, itemId, key, isDone, caller)
 	{
 		$.post
 		(
@@ -42,12 +42,12 @@ const HeroController = {
 			'{"id":' + heroId + ', "action":"Selling", "itemId":"' + itemId + '", "key":"' + key + '"}',
 			function(data) 
 			{
-			  console.log(data);
+				isDone(data, caller);
 			}
 		);
 	},
 
-	BuyShopItem: function(heroId, shopItemId, key, isDone)
+	BuyShopItem: function(heroId, shopItemId, key, isDone, caller)
 	{
 		$.post
 		(
@@ -55,7 +55,7 @@ const HeroController = {
 			'{"id":' + heroId + ', "action":"Buying", "itemId":"' + shopItemId + '", "key":"' + key + '"}',
 			function(data) 
 			{
-			  console.log(data);
+				isDone(data, caller);
 			}
 		);
 	}

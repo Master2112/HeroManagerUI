@@ -2,3 +2,39 @@ body, html {
     font-size: 12px;
     font-family: Verdana, sans-serif;
 }
+
+#shopBox
+{
+	display: none;
+	position: absolute;
+	left: 5%;
+	top: 5%;
+	width: 90%;
+	height: 90%;
+	border: 1px solid black;
+	background-color: white;
+}
+
+.scrollY
+{
+	position: absolute;
+	overflow-y: scroll;
+	max-height: 100%;
+	height: 100%;
+	width: 100%;
+}
+
+.left
+{
+	position: absolute;
+	width: 50%;
+	height:calc(100% - 100px);
+}
+
+.right
+{
+	position: absolute;
+	left: 50%;
+	width: 50%;
+	height:calc(100% - 100px);
+}

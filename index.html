@@ -29,6 +29,7 @@
         <a href="#" data-id="5">Lucia</a>
         <a href="#" data-id="6">Laura</a>
         <a href="#" data-id="7">Amber</a>
+        <a href="#" data-id="8">Bart</a>
     </div><br>
 	<div id="heroes-links"><b><a href="#" data-id="0">Heroes</a></b> - 
         <a href="#" data-id="1">Tim</a>
@@ -40,9 +41,13 @@
         <a href="#" data-id="7">McFaggots</a>
         <a href="#" data-id="8">Cactus</a>
         <a href="#" data-id="9">AJ</a>
+        <a href="#" data-id="10">Sir Fancypants</a>
     </div><br><br>
 	<div id="controlBox"></div><br>
 	<div id="displayBox"></div>
+	
+	<div id="shopBox"></div>
+	
     <div id="locations-matches">
         
         <!-- create error template -->
@@ -51,6 +56,49 @@
         </script>
         <!-- create matches template -->
 		
+		<script id="template-store" type="text/template">
+			<a href="#"><input type="button" value="Close" class="closeButton"></input></a>
+						
+			<%if(rc.buying) {console.log("Store template doing things");%>
+				Money: <%=rc.heroMoney%><br>
+				<div id="buySection" class="left">
+					<h3> Buy: </h3>
+					<div class="scrollY">
+						<% _.each(rc.buyList, function(item){%>
+							
+								<b><%=item.name%></b><br>
+								<%=item.category%>, <%=item.type%><br>
+								<i> <%=item.description%> </i><br>
+								<%if(item.damage != 0){%>
+									Damage: <%=item.damage%><br>
+								<%}%>
+								<a href="#" data-itemid="<%=item.id%>" data-heroId="<%=rc.heroId%>"><input type="button" data-heroId="<%=rc.heroId%>" value="Buy for <%=item.value%>" class="buyActionButton" data-itemid="<%=item.id%>"></input></a>
+							<br><br>
+						<%});%>
+					</div>
+				</div>
+			<%}%>
+			
+			<%if(rc.selling) {%>
+				<div id="sellSection" class="right">
+					<h3> Sell: </h3>
+					<div class="scrollY">
+						<% _.each(rc.sellList, function(item){%>
+								
+								<b><%=item.name%></b><br>
+								<%=item.category%>, <%=item.type%><br>
+								<i> <%=item.description%> </i><br>
+								<%if(item.damage != 0){%>
+									Damage: <%=item.damage%><br>
+								<%}%>
+							<a href="#" data-itemid="<%=item.id%>" data-heroid="<%=rc.heroId%>"><input type="button" data-heroid="<%=rc.heroId%>" value="Sell for <%=Math.round((item.value * 0.9) * 100) / 100%>" class="sellActionButton" data-itemid="<%=item.id%>"></input></a>
+							<br><br>
+						<%});%>
+					</div>
+				</div>
+			<%}%>
+		</script>
+		
 		<script id="template-controller" type="text/template">
 			<% if(rc == null) {%>
 				<input type="text" id="loginEmail"></input>
@@ -58,17 +106,22 @@
 				<a href="#"><input type="button" id="LoginButton" value="Log In"></input></a>
 			<%} else {%>
 				<h3> My Heroes: </h3>
-				<% _.each(rc.heroes, function(hero){%>
+				<% _.each(rc.heroes, function(hero){ var storeDone = false;%>
 					<b><%=hero.name%></b> <i><%=hero.currentAction%>, <%=hero.location%></i>
 					<%_.each(hero.possibleActions, function(action){ if(action != "Buying" && action != "Selling"){%>
+						
+						<% actionStr = action.replace("Moving North", "North To " + hero.directions.north); %>
+						<% actionStr = actionStr.replace("Moving East", "East To " + hero.directions.east); %>
+						<% actionStr = actionStr.replace("Moving South", "South To " + hero.directions.south); %>
+						<% actionStr = actionStr.replace("Moving West", "West To " + hero.directions.west); %>
+						
+							<a href="#" data-id="<%=hero.id%>"><input type="button" data-id="<%=hero.id%>" value="<%=actionStr%>" class="actionButton" id="<%=action%>"></input></a>
+						<%}else if (!storeDone){%>
+							<% storeDone = true; %>
+							<a href="#" data-heroId="<%=hero.id%>"><input type="button" data-heroId="<%=hero.id%>" value="Store" class="storeButton"></input></a>
+						<%}%>
 					
-					<% actionStr = action.replace("Moving North", "North To " + hero.directions.north); %>
-					<% actionStr = actionStr.replace("Moving East", "East To " + hero.directions.east); %>
-					<% actionStr = actionStr.replace("Moving South", "South To " + hero.directions.south); %>
-					<% actionStr = actionStr.replace("Moving West", "West To " + hero.directions.west); %>
-					
-						<a href="#" data-id="<%=hero.id%>"><input type="button" data-id="<%=hero.id%>" value="<%=actionStr%>" class="actionButton" id="<%=action%>"></input></a>
-					<%}})%>
+					<%});%>
 					<br>
 				<%});%>
 			<%}%>

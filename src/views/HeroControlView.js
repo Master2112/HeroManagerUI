@@ -20,7 +20,7 @@ const HeroControlView = View.extend
 	
 	clickHandler: function(e)
 	{
-		console.log("Form interaction on " + e.target.id);
+		console.log("Form interaction on #" + e.target.id + " ." + $(e.target).attr("class"));
 		console.log(e.target);
 		if(e.target.id == "LoginButton")
 		{
@@ -37,7 +37,7 @@ const HeroControlView = View.extend
 				console.log("Success! key = " + key);
 			}, this);
 		}
-		else if(e.target.class = "actionButton")
+		else if($(e.target).attr("class") == "actionButton")
 		{
 			console.log("Commanded " + this.userKey);
 			HeroController.CommandHero(e.target.dataset['id'], e.target.id, this.userKey, function(data, self)
@@ -46,12 +46,28 @@ const HeroControlView = View.extend
 				console.log(data);
 			}, this);
 		}
+		else if($(e.target).attr("class") == "storeButton")
+		{
+			console.log("Store " + this.userKey);
+			let heroId = e.target.dataset['heroid'];
+			let hero = null;
+			
+			for(let i = 0; i < this.collection.models.length; i++) //TODO: Remove un-necessary User Loop
+			{
+				for(let h = 0; h < this.collection.models[i].attributes.heroes.length; h++)
+				{
+					if(heroId == this.collection.models[i].attributes.heroes[h].id)
+						hero = this.collection.models[i].attributes.heroes[h];
+				}
+			}
+			
+			console.log("Opening store for " + hero.name);
+			App.events.trigger('reloadStore', {hero:hero, key:this.userKey, email:this.userEmail});
+		}
 	},
 	
 	loadMatches: function(match)
 	{
-		console.log(match);
-	
 		this.collection.fetch
 		({
 			success:(collection) => {this.matchesLoaded(collection)},

@@ -10,6 +10,8 @@ import HeroesView from './views/HeroesView';
 import UsersView from './views/UsersView';
 import LocationsView from './views/LocationsView';
 
+import StoreView from './views/StoreView';
+
 import HeroControlView from './views/HeroControlView';
 
 (function ()
@@ -41,6 +43,8 @@ import HeroControlView from './views/HeroControlView';
         new HeroLinks({el: "#heroes-links"});
         new LocationLinks({el: "#locations-links"});
         new UserLinks({el: "#users-links"});
+		
+        new StoreView({el: "#shopBox"});
 		
         new HeroesView({el: "#heroes", collection: heroesCollection});
         new LocationsView({el: "#locations", collection: locationsCollection});
