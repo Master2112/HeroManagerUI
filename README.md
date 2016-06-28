@@ -1,7 +1,8 @@
 Hero Manager
 ES6 Project
 
-Samenvatting
+Samenvatting:
+
 Heromanager is een online spel dat speelt als een langdurige turn-based RPG.
 De speler maakt een held aan, die een aantal vaardigheden en voorwerpen heeft. De held doet dingen per beurt, maar elke beurt duurt één hele dag. Jij bepaalt dus waar jouw held zich vandaag mee bezig houdt, en hij schrijft alles op in zijn logboek die je morgen kan lezen.
 
@@ -24,8 +25,11 @@ Dit systeem is gemaakt met PHP en een SQL database. Je kunt altijd je helden oph
 
 Dit huidige systeem is te vinden op:
 http://timfalken.com/heromanager/heroes
+
 http://timfalken.com/heromanager/locations
+
 http://timfalken.com/heromanager/users
+
 
 Wat ga ik maken?
 Een JSON/XML overzicht, wat je alleen kan sturen via een webrequest, is niet bepaald gebruiksvriendelijk. Wat ik wil maken is een gebruikersinterface die in een web-browser draait. Dit zal ik uiteraard maken met ES6, wat Babel voor me omzet in iets wat de browser ook nog kan begrijpen.
