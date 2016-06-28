@@ -15,6 +15,10 @@ const HeroLinks = View.extend
 		this.router = new HeroesRouter();
 	},
 	
+	/**
+	 * The OnClick handler
+	 * @param {event} e - The click event.
+	 */
 	clickHandler: function(e)
 	{
 		let t = e.currentTarget;

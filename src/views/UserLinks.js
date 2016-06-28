@@ -15,6 +15,10 @@ const UserLinks = View.extend
 		this.router = new UsersRouter();
 	},
 	
+	/**
+	 * The OnClick handler
+	 * @param {event} e - The click event.
+	 */
 	clickHandler: function(e)
 	{
 		let t = e.currentTarget;

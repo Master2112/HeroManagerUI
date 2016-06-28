@@ -8,7 +8,10 @@ const HeroesView = View.extend
 	{
 		App.events.on('reloadHeroes', this.loadMatches, this);
 	},
-	
+	/**
+	 * Load matching models
+	 * @param {object} match - Object containing id to search for.
+	 */
 	loadMatches: function(match)
 	{
 		console.log(match);

@@ -17,7 +17,10 @@ const HeroControlView = View.extend
 	{
 		this.loadMatches()
 	},
-	
+	/**
+	 * The OnClick handler
+	 * @param {event} e - The click event.
+	 */
 	clickHandler: function(e)
 	{
 		console.log("Form interaction on #" + e.target.id + " ." + $(e.target).attr("class"));
@@ -77,7 +80,10 @@ const HeroControlView = View.extend
 			}*/
 		});
 	},
-	
+	/**
+	 * Load matching data
+	 * @param {array} collection - Collection retrieved from API
+	 */
 	matchesLoaded: function(collection)
 	{
 		if(collection == null)

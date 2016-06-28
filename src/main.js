@@ -34,6 +34,9 @@ import HeroControlView from './views/HeroControlView';
         Backbone.history.start({pushState: true, root: '/hr/backbone-routing-start/'}); //Change to your root URL
     };
 	
+	/**
+	 * Load the views and initialize them
+	 */
 	let loadLinks = function()
 	{
 		var heroesCollection = new Heroes();

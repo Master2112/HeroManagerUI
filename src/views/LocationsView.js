@@ -9,6 +9,10 @@ const LocationsView = View.extend
 		App.events.on('reloadLocations', this.loadMatches, this);
 	},
 	
+	/**
+	 * Load the matching models
+	 * @param {object} An object containing search parameters (ID only)
+	 */
 	loadMatches: function(match)
 	{
 		console.log(match);
@@ -23,6 +27,10 @@ const LocationsView = View.extend
 		});
 	},
 	
+	/**
+	 * Finalize loading
+	 * @param {array} The loaded collection
+	 */
 	matchesLoaded: function(collection)
 	{
 		_.templateSettings.variable = "rc";

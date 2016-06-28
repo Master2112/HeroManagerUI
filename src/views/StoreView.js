@@ -47,7 +47,10 @@ const StoreView = View.extend
 			}, this);
 		}
 	},
-	
+	/**
+	 * Load the matching data
+	 * @param {object} An object containing hero data needed for the store.
+	 */
 	loadStore: function(heroData)
 	{
 		this.HeroData = heroData;

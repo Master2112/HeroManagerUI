@@ -15,6 +15,10 @@ const LocationLinks = View.extend
 		this.router = new LocationsRouter();
 	},
 	
+	/**
+	 * The OnClick handler
+	 * @param {event} e - The click event.
+	 */
 	clickHandler: function(e)
 	{
 		let t = e.currentTarget;

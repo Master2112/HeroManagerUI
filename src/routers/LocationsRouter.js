@@ -6,6 +6,10 @@ const LocationsRouter = Router.extend({
 		'locations/:id': 'locationAction'
 	},
 	
+	/**
+	 * Reload data
+	 * @param {int} id - The ID to load in the URL
+	 */
 	locationAction: function(id)
 	{
 		App.events.trigger('reloadLocations', {id:id});

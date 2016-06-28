@@ -9,6 +9,10 @@ const UsersView = View.extend
 		App.events.on('reloadUsers', this.loadMatches, this);
 	},
 	
+	/**
+	 * Load matching models
+	 * @param {object} match - Object containing id to search for.
+	 */
 	loadMatches: function(match)
 	{
 		console.log(match);
